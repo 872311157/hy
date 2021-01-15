@@ -1,17 +1,72 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>XXX系统管理中心</title>
-    <script src="/springboot/js/vue.js"></script>
+    <link rel="stylesheet" href="/hy/css/main.css">
+    <link rel="stylesheet" href="/hy/css/vue-tree.css">
+    <script src="/hy/js/jquery-3.5.1.js"></script>
+    <script src="/hy/js/vue.js"></script>
+    <script src="/hy/js/vueutils.js"></script>
     <script>
         window.onload = function(){
             debugger
+            var userid = $("#userid").val();
+            var config = getDeaultValue();
+            new Vue({
+                el: '#app',
+                data: {
+                    bean:{
+                        config: config,
+                        userid: userid,
+                        pageurl: '',
+                        dataurl: '/hy/hymodule/queryModules'
+                    }
+                }
+            })
+        }
+        var getDeaultValue = function(){
+            var defaultdata = null;
+            $.ajax({
+                type: "post",
+                async: false,//同步，异步
+                url: "/hy/login/defaultconfig", //请求的服务端地址
+                dataType: "json",
+                success:function(data){
+                    console.log(data);
+                    defaultdata = data;
+                },
+                error:function(i, s, e){
+                    flag = false;
+                    alert('error'); //错误的处理
+                }
+            });
+            return defaultdata;
         }
     </script>
 </head>
 <body>
-<p th:text="${session.user.username}" />
-<h1>欢迎登陆！</h1>
+<div id="app" class="main_body">
+    <div class="main_top">
+        <input id="userid" hidden="hidden" type="text" th:value="${session.user.id}"/>
+        <input id="username" hidden="hidden" type="text" th:value="${session.user.username}"/>
+        <div class="main_logo"><img src="../img/logo.png" /></div>
+        <div class="main_geren">
+            <div class="main_exit">
+                <span class="main_span">
+                    <span class="main_yanse" th:text="${session.user.username}"></span>
+                </span>
+                <a href="#" class="help">帮助</a>
+                <a href="#" class="exit">退出</a>
+            </div>
+        </div>
+    </div>
+    <div class="main_left">
+        <vue-tree2 v-bind:bean="bean"></vue-tree2>
+    </div>
+    <div class="main_right">
+        <iframe style="width: 100%; height: 100%;" v-bind:src="bean.pageurl"></iframe>
+    </div>
+</div>
 </body>
 </html>

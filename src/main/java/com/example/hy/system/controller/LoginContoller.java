@@ -1,5 +1,10 @@
-package com.example.hy.controller;
+package com.example.hy.system.controller;
 
+import com.example.hy.system.entity.HyUser;
+import com.example.hy.system.service.IHyRoleService;
+import com.example.hy.system.service.IHyUserService;
+import com.example.hy.util.cache.MapCacheEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +24,11 @@ import java.util.Map;
 @RequestMapping("/login")
 public class LoginContoller {
 
+    @Autowired
+    private IHyUserService hyUserService;
+    @Autowired
+    private IHyRoleService hyRoleService;
+
     @RequestMapping("")
     public String index() {
         return "login";
@@ -33,20 +43,26 @@ public class LoginContoller {
         String username = user.get("username");
         String password = user.get("password");
         System.out.println(username + "--" + password);
-        Map<String, Object> bootUser = new HashMap<String, Object>();//this.bootUserService.login(username, password);
-        bootUser.put("username", username);
-        bootUser.put("password", password);
-
-        if (null != bootUser)
+        HyUser hyUser = this.hyUserService.login(username, password);
+        if (null != hyUser)
         {
             model = new ModelAndView("redirect:main");//重定向主页面
+            //缓存
+            Integer roleid = this.hyRoleService.queryRoleidByUserid(hyUser.getId());
+            MapCacheEntity.getInstance().set(hyUser.getId().toString(), roleid);
             //使用session传递用户数据
             HttpSession session = request.getSession();
-            session.setAttribute("user",bootUser);
+            session.setAttribute("user",hyUser);
         }else {
             model.setViewName("redirect:error");
         }
         return model;
+    }
+
+    @ResponseBody
+    @RequestMapping("/defaultconfig")
+    public Map<String, Object> getDefaultSystem(){
+        return MapCacheEntity.getInstance().getConfigMap();
     }
 
     /**

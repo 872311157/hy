@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hy.system.mapper.HyRoleMapper">
+<!--    <resultMap id="" type="">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="" jdbcType="VARCHAR" property=""/>-->
+<!--        <result column="" jdbcType="INTEGER" property=""/>-->
+<!--        <result column="" jdbcType="DATE" property=""/>-->
+<!--        <result column="" jdbcType="TIME" property=""/>-->
+<!--        <result column="" jdbcType="TIMESTAMP" property=""/>-->
+<!--    </resultMap>-->
+<!--    <select id="" resultMap=""></select>-->
+    <select id="queryByParams" resultType="com.example.hy.system.entity.HyRole" parameterType="java.util.Map">
+        select * from hyrole
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="rolename!=null">
+                and rolename = like concat('%',#{rolename},'%')
+            </if>
+            <if test="roletype!=null">
+                and roletype = #{roletype}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryRoleidByUserid" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select roleid from hy_roleuser where userid=#{userid}
+    </select>
+<!--    <insert id="" parameterType=""></insert>-->
+</mapper>

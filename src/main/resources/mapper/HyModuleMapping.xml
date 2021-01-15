@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.hy.system.mapper.HyModuleMapper">
+<!--    <resultMap id="" type="">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="" jdbcType="VARCHAR" property=""/>-->
+<!--        <result column="" jdbcType="INTEGER" property=""/>-->
+<!--        <result column="" jdbcType="DATE" property=""/>-->
+<!--        <result column="" jdbcType="TIME" property=""/>-->
+<!--        <result column="" jdbcType="TIMESTAMP" property=""/>-->
+<!--    </resultMap>-->
+<!--    <select id="" resultMap=""></select>-->
+    <select id="queryListByParam" resultType="com.example.hy.system.entity.HyModule" parameterType="java.util.Map">
+        select * from hymodule
+        <where>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="mname!=null">
+                and mname = like concat('%',#{mname},'%')
+            </if>
+            <if test="mtype!=null">
+                and mtype = #{mtype}
+            </if>
+            <if test="parentid!=null">
+                and parentid = #{parentid}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryModules" resultType="com.example.hy.system.entity.HyModule" parameterType="java.lang.Integer">
+        select moduleid id,mname ,parentid ,mtype from view_rolemodules where roleid = #{roleid}
+    </select>
+<!--    <insert id="" parameterType=""></insert>-->
+<!--    <update id=""></update>-->
+<!--    <delete id=""></delete>-->
+</mapper>
