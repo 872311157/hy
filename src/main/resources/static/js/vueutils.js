@@ -65,3 +65,41 @@ Vue.component('vue-tree2', {
         }
     }
 })
+
+Vue.component('tablebody', {
+    props: [],
+    template: '<table><tbody><tr v-for="data in items.result">@tdhtml</tr></tbody></table>',
+    data: function () {
+        debugger
+        this.items = this.init_table();
+        var tdhtml = this.setTdHtml(this.items);
+        this.$options.template = this.$options.template.replace("@tdhtml", tdhtml);
+
+        return {item: this.items}
+    },
+    methods: {
+        init_table: function(arg){
+            debugger
+            var data = {'pageSize':10, 'result':[{'index':0,'name':'周三'},{'index':1,'name':'周四'}], 'resultmeta': ['index', 'name']};
+            return data;
+        },
+        setTdHtml: function(arg){
+            debugger
+            var tdhtml = "";
+            var stylemap = {};
+            var resultmeta = this.items.resultmeta;
+            var ths = $("table > thead").find("th");
+            $(ths).each(function(index, item){
+                debugger
+                var width = item.style.width;
+                var md = item.getAttribute("md");
+                var stylehtml = "text-align: center; width: " + width + ";";
+                stylemap[md] = stylehtml;
+            })
+            resultmeta.forEach(function(item){
+                tdhtml += "<td style='" + stylemap[item] + "'>{{data." + item + "}}</td>";
+            })
+            return tdhtml;
+        }
+    }
+})

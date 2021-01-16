@@ -1,4 +1,12 @@
 $(function() {
+    new Vue({
+        el: '#hytable',
+        data: {
+
+        }
+    })
+
+
     PageContent.loadPage()
 
     var PageContent = {};
