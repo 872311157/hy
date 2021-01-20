@@ -49,7 +49,7 @@ public class LoginContoller {
             model = new ModelAndView("redirect:main");//重定向主页面
             //缓存
             Integer roleid = this.hyRoleService.queryRoleidByUserid(hyUser.getId());
-            MapCacheEntity.getInstance().set(hyUser.getId().toString(), roleid);
+            MapCacheEntity.getInstance().setCache(hyUser.getId().toString(), roleid);
             //使用session传递用户数据
             HttpSession session = request.getSession();
             session.setAttribute("user",hyUser);

@@ -17,10 +17,13 @@
                 el: '#app',
                 data: {
                     bean:{
+                        firstName: '',
+                        secondName: '',
+                        thirdName:'',
                         config: config,
                         userid: userid,
-                        pageurl: '',
-                        dataurl: '/hy/hymodule/queryModules'
+                        pageUrl: '',
+                        dataUrl: '/hy/hymodule/queryModules'
                     }
                 }
             })
@@ -65,7 +68,8 @@
         <vue-tree2 v-bind:bean="bean"></vue-tree2>
     </div>
     <div class="main_right">
-        <iframe style="width: 100%; height: 100%;" v-bind:src="bean.pageurl"></iframe>
+        <div class="right_head"><span v-if="bean.firstName !== ''">{{bean.firstName}}</span><span v-if="bean.secondName !== ''"> > {{bean.secondName}}</span><span v-if="bean.thirdName !== ''"> > {{bean.thirdName}}</span></div>
+        <iframe style="width: 100%; height: 100%;" v-bind:src="bean.pageUrl"></iframe>
     </div>
 </div>
 </body>

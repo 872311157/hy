@@ -47,7 +47,7 @@ CREATE TABLE hysystem(
     sysvalue VARCHAR(256) -- 默认数据值
 );
 select * from hysystem;
-insert into hysystem(systype, sysvalue) values('server', 'http://127.0.0.1:8090/hy');
+insert into hysystem(systype, sysvalue) values('server', 'http://127.0.0.1:8090/hy/');
 
 --角色表
 drop table hyrole;

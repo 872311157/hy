@@ -2,12 +2,13 @@
 Vue.component('vue-tree2', {
     props: ['bean'],
     template: '<ol class="tree">'+
-        '<li v-for="module in modules">'+
-            '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" class="folderOne" :nid="module.id">{{module.mname}}</label>'+
-            '<ol style="display: none;" v-for="child in module.childs"><li class="file folderTwo"><label v-on:click="open_page" :nid="child.id" :psrc="child.maddress">{{child.mname}}</label></li></ol>'+
+        '<li class="folderOne" v-for="module in modules">'+
+            '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" :nid="module.id">{{module.mname}}</label>'+
+            '<ol style="display: none;" v-for="child in module.childs" ><li class="file folderTwo"><label v-on:click="open_page" :nid="child.id" :psrc="child.maddress">{{child.mname}}</label></li></ol>'+
         '<li>'+
     '<ol>',
     data: function () {
+        this.checkedNid = '';
         this.modules = this.init_modules();
         return {modules: this.modules,box: false}
     },
@@ -16,7 +17,7 @@ Vue.component('vue-tree2', {
             debugger
             var modules;
             var userid = this.bean.userid;
-            var url = this.bean.dataurl;
+            var url = this.bean.dataUrl;
             $.ajax({
                 type: "post",
                 async: false,//同步，异步
@@ -58,14 +59,42 @@ Vue.component('vue-tree2', {
             }
         },
         open_page: function(arg){
+            debugger
             var target = arg.target;
+            var firstNode = $(target).parents(".folderOne");
+            if(firstNode){
+                var firstName = firstNode.children("label:first").text();
+                this.$parent.bean.firstName = firstName;
+            }
+            var secondNode = $(target).parents(".folderTwo");
+            if(secondNode){
+                var secondName = secondNode.children("label:first").text();
+                this.$parent.bean.secondName = secondName;
+            }
+            if(this.checkedMs){
+
+            }else{
+                this.checkedNid = target.getAttribute("nid");
+            }
+
+            var ol = target.parentElement.parentElement;
+            var className = ol.className;// += "active"
+            if(className.indexOf("active") > -1){
+               className = className.replace("active", " ");
+            }else{
+                className += " active";
+            }
+            ol.className = className;
             var src = target.getAttribute("psrc");
             var server = this.$parent.bean.config.server;
-            this.$parent.bean.pageurl = server + src;
+            this.$parent.bean.pageUrl = server + src;
         }
     }
 })
 
+/**
+*表格
+**/
 Vue.component('tablebody', {
     props: [],
     template: '<table><tbody><tr v-for="data in items.result">@tdhtml</tr></tbody></table>',

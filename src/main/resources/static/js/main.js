@@ -7,7 +7,7 @@ $(function() {
     })
 
 
-    PageContent.loadPage()
+    //PageContent.loadPage()
 
     var PageContent = {};
     PageContent.loadPage = function(){

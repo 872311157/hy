@@ -41,7 +41,12 @@
     border-bottom: 1px solid #afaaaa;
 }
 .tree li label:hover,li label:focus{
-    background-color:#a7a7a7;color:#fff;
+    background-color:#a7a7a7;
+    color:#fff;
+}
+.active{
+    background-color:#a7a7a7;
+    color:#fff;
 }
 /*清除所有展开的子菜单的display*/
 .tree li input + ol{

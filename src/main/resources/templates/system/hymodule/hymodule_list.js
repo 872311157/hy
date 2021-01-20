@@ -1,9 +1,8 @@
-var hymodule_list = function(){
+$(function() {
+    new Vue({
+        el: '#hytable',
+        data: {
 
-    this.pageLoad = function(){
-        debugger
-
-    }
-
-
+        }
+    })
 }

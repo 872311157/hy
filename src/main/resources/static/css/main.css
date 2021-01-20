@@ -79,6 +79,12 @@ body, html{
     height:90%;
     float: right;
 }
+.right_head{
+    background: #fff;
+    border-bottom: 1px solid #dcdcdc;
+    box-shadow: 0 1px 2px #f8f8f8;
+    padding: 15px 10px;
+}
 
 /* right */
 .main_bt{

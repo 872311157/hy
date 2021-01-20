@@ -32,7 +32,7 @@ public class HyModuleController {
         List<HyModule> modules = null;
         String userid = params.get("userid");
         if(!StringUtils.isEmpty(userid)){
-            Integer roleid = (Integer)MapCacheEntity.getInstance().get(userid);
+            Integer roleid = (Integer)MapCacheEntity.getInstance().getCache(userid);
             modules = this.hyModuleService.queryModules(roleid);
             if(null != modules && modules.size() > 0){
                 this.queryChildModule(modules);
