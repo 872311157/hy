@@ -120,6 +120,11 @@
             <artifactId>logback-ext-spring</artifactId>
             <version>0.1.4</version>
         </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
