@@ -4,7 +4,7 @@ import com.example.hy.system.entity.HyUser;
 import com.example.hy.system.service.IHyRoleService;
 import com.example.hy.system.service.IHyUserService;
 import com.example.hy.util.cache.MapCacheEntity;
-import com.example.hy.util.redis.RedisUtil;
+import com.example.hy.util.redis.HyRedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,12 +29,11 @@ public class LoginContoller {
     @Autowired
     private IHyRoleService hyRoleService;
     @Autowired
-    private RedisUtil redisUtil;
-
+    private HyRedisUtils hyRedisUtils;
 
     @RequestMapping("")
     public String index() {
-        return "login";
+        return "login1";
     }
 
     /**
@@ -52,16 +49,14 @@ public class LoginContoller {
         if (null != hyUser)
         {
             model = new ModelAndView("redirect:main");//重定向主页面
-            //缓存
+            //缓存当前用户登录的角色
             Integer roleid = this.hyRoleService.queryRoleidByUserid(hyUser.getId());
-            MapCacheEntity.getInstance().setCache(hyUser.getId().toString(), roleid);
+            String key = hyUser.getId().toString();
+            this.hyRedisUtils.set(key, roleid.toString());
+
             //使用session传递用户数据
             HttpSession session = request.getSession();
             session.setAttribute("user",hyUser);
-            //使用redis
-//            redisUtil.set("foo", "123456");
-//            String value = redisUtil.get("foo");
-//            System.out.println(value);
         }else {
             model.setViewName("redirect:error");
         }
@@ -71,7 +66,8 @@ public class LoginContoller {
     @ResponseBody
     @RequestMapping("/defaultconfig")
     public Map<String, Object> getDefaultSystem(){
-        return MapCacheEntity.getInstance().getConfigMap();
+        Map<String, Object> systemConfig = this.hyRedisUtils.hmget("systemConfig");
+        return systemConfig;
     }
 
     /**

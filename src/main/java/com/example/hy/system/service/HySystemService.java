@@ -3,6 +3,7 @@ package com.example.hy.system.service;
 import com.example.hy.system.entity.HySystem;
 import com.example.hy.system.mapper.HySystemMapper;
 import com.example.hy.util.cache.MapCacheEntity;
+import com.example.hy.util.redis.HyRedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ import java.util.Map;
 
 @Service
 public class HySystemService implements IHySystemService{
+
+    @Autowired
+    private HyRedisUtils hyRedisUtils;
     @Autowired
     private HySystemMapper hySystemMapper;
 
@@ -28,8 +32,12 @@ public class HySystemService implements IHySystemService{
     @Override
     public void setDefaultConfig() {
         List<HySystem> list = this.hySystemMapper.queryAllList();
+        Map<String, Object> defaultMap = new HashMap<String, Object>();
         for (HySystem hySystem : list) {
-            MapCacheEntity.getInstance().setConfig(hySystem.getSystype(), hySystem.getSysvalue());
+            String key = hySystem.getSystype();
+            String value = hySystem.getSysvalue();
+            defaultMap.put(key, value);
         }
+        this.hyRedisUtils.hmset("systemConfig", defaultMap);
     }
 }

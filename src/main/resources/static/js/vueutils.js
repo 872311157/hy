@@ -109,26 +109,32 @@ Vue.component('tablebody', {
     methods: {
         init_table: function(arg){
             debugger
-            var data = {'pageSize':10, 'result':[{'index':0,'name':'周三'},{'index':1,'name':'周四'}], 'resultmeta': ['index', 'name']};
+
+            var data = {'pageSize':10, 'result':[
+                {'index':0, 'workNo': '420025','name':'周三', 'demo01':'穿的撒色', 'demo02':'穿的撒色', 'demo03':'穿的撒色', 'demo04':'穿的撒色', 'demo05':'穿的撒色', 'demo06':'穿的撒色', 'demo07':'穿的撒色'},
+                {'index':1,'name':'周四'},
+                {'index':2,'name':'周四'},
+                {'index':3,'name':'周四'},
+                {'index':4,'name':'周四'},
+                {'index':5,'name':'周四'},
+                {'index':6,'name':'周四'},
+                {'index':7,'name':'周四'},
+                {'index':8,'name':'周四'},
+                {'index':9,'name':'周四'}]};
             return data;
         },
         setTdHtml: function(arg){
             debugger
-            var tdhtml = "";
-            var stylemap = {};
-            var resultmeta = this.items.resultmeta;
-            var ths = $("table > thead").find("th");
+            var tdHtml = "";
+            var ths = $(".head-list").find("th");
             $(ths).each(function(index, item){
                 debugger
                 var width = item.style.width;
                 var md = item.getAttribute("md");
-                var stylehtml = "text-align: center; width: " + width + ";";
-                stylemap[md] = stylehtml;
+                var styleHtml = "text-align: center; width: " + width + ";";
+                tdHtml += "<td style='" + styleHtml + "' md='" + md + "'>{{data." + md + "}}</td>";
             })
-            resultmeta.forEach(function(item){
-                tdhtml += "<td style='" + stylemap[item] + "'>{{data." + item + "}}</td>";
-            })
-            return tdhtml;
+            return tdHtml;
         }
     }
 })

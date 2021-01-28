@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>登录(Login)</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/hy/css/supersized.css">
+    <link rel="stylesheet" href="/hy/login/css/style.css">
+    <script src="/hy/js/vue.js"></script>
+    <script src="/hy/js/jquery-1.8.2.min.js" ></script>
+    <script src="/hy/js/supersized.3.2.7.min.js" ></script>
+    <script src="/hy/login/js/supersized-init.js" ></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            new Vue({
+                el: '#login',
+                data: {
+                    username: '',
+                    password: ''
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="page-container" id="login">
+    <h1>登录(Login)</h1>
+    <form action="./login/submit" method="post">
+        <input type="text" v-model="username" name="username" class="username" placeholder="请输入您的用户名！" value="system">
+        <input type="password" v-model="password" name="password" class="password" placeholder="请输入您的用户密码！" value="system">
+        <button type="submit" class="submit_button">登录</button>
+    </form>
+</div>
+</body>
+
+</html>
+

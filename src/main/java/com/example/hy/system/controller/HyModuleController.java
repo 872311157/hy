@@ -3,6 +3,9 @@ package com.example.hy.system.controller;
 import com.example.hy.system.entity.HyModule;
 import com.example.hy.system.service.IHyModuleService;
 import com.example.hy.util.cache.MapCacheEntity;
+import com.example.hy.util.redis.HyRedisUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -19,7 +22,14 @@ import java.util.Map;
 public class HyModuleController {
 
     @Autowired
+    private HyRedisUtils hyRedisUtils;
+    @Autowired
     private IHyModuleService hyModuleService;
+
+    /**
+     * 获取日志对象，构造函数传入当前类，查找日志方便定位
+     */
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping("")
     public String page(){
@@ -32,10 +42,12 @@ public class HyModuleController {
         List<HyModule> modules = null;
         String userid = params.get("userid");
         if(!StringUtils.isEmpty(userid)){
-            Integer roleid = (Integer)MapCacheEntity.getInstance().getCache(userid);
-            modules = this.hyModuleService.queryModules(roleid);
-            if(null != modules && modules.size() > 0){
-                this.queryChildModule(modules);
+            String roleid = this.hyRedisUtils.get(userid);
+            if(!StringUtils.isEmpty(roleid)){
+                modules = this.hyModuleService.queryModules(Integer.parseInt(roleid));
+                if(null != modules && modules.size() > 0){
+                    this.queryChildModule(modules);
+                }
             }
         }
         return modules;

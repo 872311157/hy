@@ -1,8 +1,8 @@
 $(function() {
     new Vue({
-        el: '#hytable',
+        el: '#hyTable',
         data: {
 
         }
     })
-}
+})

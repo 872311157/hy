@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!-- 定义参数常量 -->
     <!--自定义颜色配置 此处converterClass引用的是日志颜色类的路径， 此匹配的是第二种控制台色彩输出方式-->
-    <conversionRule conversionWord="color" converterClass="com.example.hy.util.Log.LogbackColorful"/>
+    <conversionRule conversionWord="color" converterClass="com.example.hy.util.logutil.LogbackColorful"/>
     <property name="log.level" value="debug" />
     <property name="log.maxHistory" value="30" />
     <property name="log.filePath" value="./src/main/resources/logs" />

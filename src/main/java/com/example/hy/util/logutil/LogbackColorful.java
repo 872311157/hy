@@ -1,4 +1,4 @@
-package com.example.hy.util.Log;
+package com.example.hy.util.logutil;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;

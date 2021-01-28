@@ -2,8 +2,10 @@ package com.example.hy.util.listener;
 
 import com.example.hy.system.service.HySystemService;
 import com.example.hy.util.cache.MapCacheEntity;
+import com.example.hy.util.redis.HyRedisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -30,15 +32,18 @@ public class MyServletContextListener implements ApplicationListener<ContextRefr
      * 获取日志对象，构造函数传入当前类，查找日志方便定位
      */
     private final Logger log = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private HyRedisUtils hyRedisUtils;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        checkLisence();
+        this.checkLisence();
 
         // 先获取到 application 上下文
         ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
         // 获取对应的 service
         HySystemService service = applicationContext.getBean(HySystemService.class);
+        // 初始化系统配置，将配置信息添加到redis缓存
         service.setDefaultConfig();
         // 获取 application 域对象，将查到的信息放到 application 域中
 //        ServletContext application = applicationContext.getBean(ServletContext.class);
@@ -72,6 +77,10 @@ public class MyServletContextListener implements ApplicationListener<ContextRefr
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //redis缓存
+        this.hyRedisUtils.set("username", "hanlulu");
+        log.info(this.hyRedisUtils.get("username"));
+        this.hyRedisUtils.expire("username", 60);
         log.error("几但是对方了解了");
         //退出系统
         //System.exit(0);
