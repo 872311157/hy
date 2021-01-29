@@ -2,8 +2,8 @@ package com.example.hy.system.controller;
 
 import com.example.hy.system.entity.HyModule;
 import com.example.hy.system.service.IHyModuleService;
-import com.example.hy.util.cache.MapCacheEntity;
-import com.example.hy.util.redis.HyRedisUtils;
+import com.example.hy.util.base.EntityBeanSet;
+import com.example.hy.util.redis.HyRedisTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/hymodule")
+@RequestMapping("/hyModule")
 public class HyModuleController {
 
     @Autowired
-    private HyRedisUtils hyRedisUtils;
+    private HyRedisTemplate hyRedisUtils;
     @Autowired
     private IHyModuleService hyModuleService;
 
@@ -33,7 +33,23 @@ public class HyModuleController {
 
     @RequestMapping("")
     public String page(){
-        return "system/hymodule/hymodule_list";
+        return "system/hyModule/hyModule_list";
+    }
+
+    @RequestMapping("queryPageList")
+    @ResponseBody
+    public EntityBeanSet queryPageList(@RequestParam Map<String, String> params){
+        String mname = params.get("mname");
+        String mtype = params.get("mtype");
+        Map<String, Object> par = new HashMap<String, Object>();
+        if (!StringUtils.isEmpty(mname)){
+            par.put("mname", mname);
+        }
+        if (!StringUtils.isEmpty(mtype)){
+            par.put("mtype", mtype);
+        }
+        EntityBeanSet entityBeanSet = this.hyModuleService.queryPageList(par);
+        return entityBeanSet;
     }
 
     @RequestMapping("queryModules")

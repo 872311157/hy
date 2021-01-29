@@ -2,7 +2,7 @@ package com.example.hy.util.listener;
 
 import com.example.hy.system.service.HySystemService;
 import com.example.hy.util.cache.MapCacheEntity;
-import com.example.hy.util.redis.HyRedisUtils;
+import com.example.hy.util.redis.HyRedisTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class MyServletContextListener implements ApplicationListener<ContextRefr
      */
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @Autowired
-    private HyRedisUtils hyRedisUtils;
+    private HyRedisTemplate hyRedisUtils;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {

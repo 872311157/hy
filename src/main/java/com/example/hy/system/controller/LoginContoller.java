@@ -4,7 +4,7 @@ import com.example.hy.system.entity.HyUser;
 import com.example.hy.system.service.IHyRoleService;
 import com.example.hy.system.service.IHyUserService;
 import com.example.hy.util.cache.MapCacheEntity;
-import com.example.hy.util.redis.HyRedisUtils;
+import com.example.hy.util.redis.HyRedisTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +29,7 @@ public class LoginContoller {
     @Autowired
     private IHyRoleService hyRoleService;
     @Autowired
-    private HyRedisUtils hyRedisUtils;
+    private HyRedisTemplate hyRedisUtils;
 
     @RequestMapping("")
     public String index() {

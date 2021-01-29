@@ -43,6 +43,7 @@ insert into hycodetable(ctype, ccode, cvalue) values('moduletype', 1, '引用');
 drop table hysystem;
 CREATE TABLE hysystem(
     id serial PRIMARY KEY not null,
+    createtime TIMESTAMP, --创建时间
     systype VARCHAR(128) UNIQUE, -- 默认数据名称
     sysvalue VARCHAR(256) -- 默认数据值
 );
@@ -53,6 +54,7 @@ insert into hysystem(systype, sysvalue) values('server', 'http://127.0.0.1:8090/
 drop table hyrole;
 CREATE TABLE hyrole(
     id serial PRIMARY KEY not null,
+    createtime TIMESTAMP, --创建时间
     rolename VARCHAR(128), -- 角色名称
     roletype INTEGER -- 角色类型
 );
@@ -63,6 +65,7 @@ insert into hyrole(id, rolename, roletype) values(0, '系统管理员', 0);
 drop table hymodule;
 CREATE TABLE hymodule(
     id serial PRIMARY KEY not null,
+    createtime TIMESTAMP, --创建时间
     mname VARCHAR(128), --模型名称
     maddress VARCHAR(512), --模型地址
     parentid INTEGER, --父模型id

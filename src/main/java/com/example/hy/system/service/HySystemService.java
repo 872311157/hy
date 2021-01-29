@@ -3,7 +3,7 @@ package com.example.hy.system.service;
 import com.example.hy.system.entity.HySystem;
 import com.example.hy.system.mapper.HySystemMapper;
 import com.example.hy.util.cache.MapCacheEntity;
-import com.example.hy.util.redis.HyRedisUtils;
+import com.example.hy.util.redis.HyRedisTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 public class HySystemService implements IHySystemService{
 
     @Autowired
-    private HyRedisUtils hyRedisUtils;
+    private HyRedisTemplate hyRedisUtils;
     @Autowired
     private HySystemMapper hySystemMapper;
 

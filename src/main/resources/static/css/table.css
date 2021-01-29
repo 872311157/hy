@@ -1,0 +1,163 @@
+html, body{
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+}
+/* 表 start*/
+.table_body{
+    height: 80%;
+    margin: 20px;
+    border: 1px solid #dcdcdc;
+}
+table{
+    width: 100%;
+    border: 1px solid #e7e7e7;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 12px;
+    color: #666;
+}
+.table_body td,.table_body th{
+    background: #fff;
+    padding: 15px 8px;
+    border: 1px solid #e7e7e7;
+    text-align: center;
+    box-sizing: border-box;
+}
+.table_body th{
+    background: #eee;
+    border-bottom:1px solid #dcdcdc;
+}
+.table_body tr.main_bg td{
+    background: #f9fafa;
+}
+.table_body tr td a{
+    padding: 3px 5px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 0 2px;
+}
+.table_body tr:hover td{
+    background: #73cfce;
+    color: #fff;
+}
+.table_body tr:hover td a:hover{
+    color: #baa01b;
+    background: #f5e17a;
+}
+.head-list{
+    height: 8%;
+}
+.body-list{
+    overflow: auto;
+    height: 86%;
+    /*height: 563px;*/
+}
+
+.body-list tr{
+    height: 20px;
+}
+
+/* 分页 */
+.table_page{
+    height: 6%;
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    overflow: hidden;
+    padding: 10px 15px;
+}
+.table_page-left{
+    float: left;
+    padding: 5px 0;
+}
+.table_page-right{
+    float: right;
+}
+.table_page-right a,.table_page-right input{
+    display: inline-block;
+    vertical-align: middle;
+}
+.table_page-right a{
+    background: #f8f8f8;
+    border: 1px solid #dcdcdc;
+    padding: 5px 15px;
+    color: #666;
+    text-decoration: none;
+}
+.table_page-right a:hover{
+    background: #21b6b4;
+    color: #fff;
+    border: 1px solid #21b6b4;
+}
+.table_page-right a.main_link{
+    background: #21b6b4;
+    color: #fff;
+    border: 1px solid #21b6b4;
+}
+.table_page-right a:hover.main_link{
+    background: #30abaa;
+    color: #fff;
+    border: 1px solid #30abaa;
+}
+.table_page-right input{
+    width: 40px;
+    text-align: center;
+    padding: 4px;
+}
+
+/* input */
+.table_search{
+    /*height: 35px;*/
+    height: 5%;
+    background: #eee;
+    padding: 16px 20px;
+    margin: 20px;
+    border: 1px solid #dcdcdc;
+}
+.search_params{
+    float: left;
+    margin-right: 15px;
+}
+.table_search span,.table_search input,.table_search select{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.table_search select{
+    width: 150px;
+}
+
+.table_search span{
+    padding: 2px 5px;
+}
+.int-text{
+    padding: 8px 10px;
+    border: 1px solid #dcdcdc;
+}
+.green-int{
+    background: #21b6b4;
+    color: #fff;
+    padding: 6px 20px;
+    margin: 2px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.yellow-int{
+    background: #ffb849;
+    color: #fff;
+    padding: 6px 20px;
+    margin: 2px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+/* a/input样式 */
+.yellow-xt{ background: #ffb849; color: #fff; cursor: pointer;}
+.red-xt{ background: #da542e; color: #fff; cursor: pointer;}
+.blue-xt{ background: #2596d4; color: #fff; cursor: pointer;}
+.green-xt{ background: #21b6b4; color: #fff; cursor: pointer;}
+/* 表 end*/

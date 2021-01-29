@@ -1,5 +1,8 @@
 package com.example.hy.system.entity;
 
+import com.example.hy.util.redis.HyRedisTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 /**
@@ -15,6 +18,7 @@ public class HyModule {
     private String	maddress;//模块地址
     private Integer parentid;//父模块id
     private Integer mtype;//模块类型0分类，1引用
+    private String mtypeStr;
     private List<HyModule> childs;//子模型
 
     public Integer getId() {
@@ -55,6 +59,14 @@ public class HyModule {
 
     public void setMtype(Integer mtype) {
         this.mtype = mtype;
+    }
+
+    public String getMtypeStr() {
+        return mtypeStr;
+    }
+
+    public void setMtypeStr(String mtypeStr) {
+        this.mtypeStr = mtypeStr;
     }
 
     public List<HyModule> getChilds() {

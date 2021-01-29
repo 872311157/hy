@@ -95,33 +95,57 @@ Vue.component('vue-tree2', {
 /**
 *表格
 **/
-Vue.component('tablebody', {
-    props: [],
-    template: '<table><tbody><tr v-for="data in items.result">@tdhtml</tr></tbody></table>',
+Vue.component('vue-table', {
+    props: ['bean'],
+    template: '<table><tbody><tr v-for="(key, value) in sites">@tdHtml</tr></tbody></table>',
     data: function () {
         debugger
-        this.items = this.init_table();
-        var tdhtml = this.setTdHtml(this.items);
-        this.$options.template = this.$options.template.replace("@tdhtml", tdhtml);
-
-        return {item: this.items}
+        this.sites = this.init_table();
+        var tdHtml = this.setTdHtml(this.items);
+        console.log(tdHtml);
+        this.$options.template = this.$options.template.replace("@tdHtml", tdHtml);
+        return {sites: this.sites}
     },
     methods: {
         init_table: function(arg){
             debugger
-
-            var data = {'pageSize':10, 'result':[
-                {'index':0, 'workNo': '420025','name':'周三', 'demo01':'穿的撒色', 'demo02':'穿的撒色', 'demo03':'穿的撒色', 'demo04':'穿的撒色', 'demo05':'穿的撒色', 'demo06':'穿的撒色', 'demo07':'穿的撒色'},
-                {'index':1,'name':'周四'},
-                {'index':2,'name':'周四'},
-                {'index':3,'name':'周四'},
-                {'index':4,'name':'周四'},
-                {'index':5,'name':'周四'},
-                {'index':6,'name':'周四'},
-                {'index':7,'name':'周四'},
-                {'index':8,'name':'周四'},
-                {'index':9,'name':'周四'}]};
-            return data;
+            var sites;
+            var bean = this.bean;
+            var search_service = bean.search_service;
+            var params = bean.params;
+            var pageNum;
+            var pageSize;
+            var pageCount;
+            var countNum;
+            var result;
+            $.ajax({
+                type: "post",
+                async: false,//同步，异步
+                url: search_service, //请求的服务端地址
+                data: params,
+                dataType: "json",
+                success:function(data){
+                    if(null != data){
+                        pageNum = data.pageNum;
+                        pageSize = data.pageSize;
+                        pageCount = data.pageCount;
+                        countNum = data.countNum;
+                    }
+                    sites = data.result;
+                },
+                error:function(i, s, e){
+                    alert('error'); //错误的处理
+                }
+            });
+            var num = this.$parent.$el.getElementsByTagName("num")[0];
+            num.innerText = pageNum;
+            var pcount = this.$parent.$el.getElementsByTagName("pcount")[0];
+            pcount.innerText = pageCount;
+            var size = this.$parent.$el.getElementsByTagName("size")[0];
+            size.innerText = pageSize;
+            var count = this.$parent.$el.getElementsByTagName("count")[0];
+            count.innerText = countNum;
+            return sites;
         },
         setTdHtml: function(arg){
             debugger
@@ -132,7 +156,13 @@ Vue.component('tablebody', {
                 var width = item.style.width;
                 var md = item.getAttribute("md");
                 var styleHtml = "text-align: center; width: " + width + ";";
-                tdHtml += "<td style='" + styleHtml + "' md='" + md + "'>{{data." + md + "}}</td>";
+                if("operation" == md){
+                    tdHtml += "<td style='" + styleHtml + "' md='" + md + "'><a class='blue-xt'>查看</a><a class='yellow-xt'>修改</a><a class='red-xt'>删除</a></td>";
+                }else if("index" == md){
+                    tdHtml += "<td style='" + styleHtml + "' md='index'>{{key + 1}}</td>";
+                }else{
+                    tdHtml += "<td style='" + styleHtml + "' md='" + md + "'>{{value." + md + "}}</td>";
+                }
             })
             return tdHtml;
         }
