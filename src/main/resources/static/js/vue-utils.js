@@ -96,61 +96,60 @@ Vue.component('vue-tree2', {
 *表格
 **/
 Vue.component('vue-table', {
-    props: ['bean'],
-    template: '<table><tbody><tr v-for="(key, value) in sites">@tdHtml</tr></tbody></table>',
+    props: ['searchName', 'params'],
+    template: '<div class="body-list"><table><tbody><tr v-for="(key, value) in sites.result">@tdHtml</tr></tbody></table></div>' +
+        '<div class="table_page"><div class="table_page-left">当前第 {{sites.pageNum}} / {{sites.pageCount}} 页,每页{{sites.pageSize}}条，共 {{sites.countNum}}条记录</div><div class="table_page-right"><b v-on:click="first_page">首页</b><b v-on:click="prev_page">上一页</b><b v-on:click="next_page">下一页</b><b v-on:click="last_page">尾页</b><input type="text" v-model="toPageNum" /><b v-on:click="to_page">跳转</b></div></div>',
     data: function () {
         debugger
         this.sites = this.init_table();
         var tdHtml = this.setTdHtml(this.items);
         console.log(tdHtml);
         this.$options.template = this.$options.template.replace("@tdHtml", tdHtml);
-        return {sites: this.sites}
+        return {
+            sites: this.sites,
+            toPageNum: ''
+        }
     },
     methods: {
-        init_table: function(arg){
+        init_table: function(){
             debugger
             var sites;
-            var bean = this.bean;
-            var search_service = bean.search_service;
-            var params = bean.params;
-            var pageNum;
-            var pageSize;
-            var pageCount;
-            var countNum;
-            var result;
+            var configMap = this.$parent.configMap;
+            var moduleName = this.$parent.$el.getAttribute("id");
+            var search_service = this.$parent.configMap.server;
+            if(this.search_service){
+                search_service += moduleName + "/" + this.searchName;
+            }else{
+                search_service += moduleName + "/queryPageList";
+            }
+            if(this.pageNum){
+                this.params.pageNum = this.pageNum;
+            }
+            if(this.pageSize){
+                this.params.pageSize = this.pageSize;
+            }
             $.ajax({
                 type: "post",
                 async: false,//同步，异步
                 url: search_service, //请求的服务端地址
-                data: params,
+                data: this.params,
                 dataType: "json",
                 success:function(data){
-                    if(null != data){
-                        pageNum = data.pageNum;
-                        pageSize = data.pageSize;
-                        pageCount = data.pageCount;
-                        countNum = data.countNum;
-                    }
-                    sites = data.result;
+                    sites = data;
                 },
                 error:function(i, s, e){
                     alert('error'); //错误的处理
                 }
             });
-            var num = this.$parent.$el.getElementsByTagName("num")[0];
-            num.innerText = pageNum;
-            var pcount = this.$parent.$el.getElementsByTagName("pcount")[0];
-            pcount.innerText = pageCount;
-            var size = this.$parent.$el.getElementsByTagName("size")[0];
-            size.innerText = pageSize;
-            var count = this.$parent.$el.getElementsByTagName("count")[0];
-            count.innerText = countNum;
+            this.pageNum = sites.pageNum;
+            this.pageSize = sites.pageSize;
+            this.pageCount = sites.pageCount;
             return sites;
         },
         setTdHtml: function(arg){
             debugger
             var tdHtml = "";
-            var ths = $(".head-list").find("th");
+            var ths = $("thead[ct='head_names']").find("th");
             $(ths).each(function(index, item){
                 debugger
                 var width = item.style.width;
@@ -165,6 +164,40 @@ Vue.component('vue-table', {
                 }
             })
             return tdHtml;
+        },
+        first_page: function(arg){
+            //首页
+            debugger
+            this.pageNum = 1;
+            this.sites = this.init_table();
+        },
+        prev_page: function(arg){
+            //上一页
+            debugger
+            if (this.pageNum > 1){
+                this.pageNum = this.pageNum - 1;
+                this.sites = this.init_table();
+            }
+        },
+        next_page: function(arg){
+            //下一页
+            debugger
+            if (this.pageNum < this.pageCount){
+                this.pageNum = this.pageNum + 1;
+                this.sites = this.init_table();
+            }
+        },
+        last_page: function(arg){
+            //尾页
+            debugger
+            this.pageNum = parseInt(this.pageCount);
+            this.sites = this.init_table();
+        },
+        to_page: function(arg){
+            //跳转
+            debugger
+            this.pageNum = parseInt(this.toPageNum);
+            this.sites = this.init_table();
         }
     }
 })

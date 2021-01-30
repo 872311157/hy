@@ -9,10 +9,11 @@
     <script src="/hy/js/vue.js"></script>
     <script src="/hy/js/vue-utils.js"></script>
     <script>
+        var configMap;
         window.onload = function(){
             debugger
             var userid = $("#userid").val();
-            var config = getDefaultValue();
+            configMap = getDefaultValue();
             new Vue({
                 el: '#app',
                 data: {
@@ -20,7 +21,7 @@
                         firstName: '',
                         secondName: '',
                         thirdName:'',
-                        config: config,
+                        config: configMap,
                         userid: userid,
                         pageUrl: '',
                         dataUrl: '/hy/hyModule/queryModules'

@@ -7,13 +7,14 @@
     <script src="/hy/js/jquery-3.5.1.js"></script>
     <script src="/hy/js/vue.js"></script>
     <script src="/hy/js/vue-utils.js"></script>
+<!--    <script src="/hy/js/hyTable.js"></script>-->
     <script src="/hy/system/hyModule/hyModule_list.js"></script>
 </head>
 <body style="overflow: hidden;">
     <!-- right -->
-    <div id="hyTable" style="height: 100%;">
+    <div id="hyModule" style="height: 100%;">
         <div class="table_search">
-            <div class="search_params">
+            <div ct="search_params">
                 <span>账号类型</span>
                 <span>
                     <select class="int-text" >
@@ -25,13 +26,13 @@
                     </select>
                 </span>
             </div>
-            <div class="search_params">
+            <div ct="search_params">
                 <span>账号/邮箱</span>
                 <span>
-                    <input type="text" class="int-text" v-model="bean.params.mname" />
+                    <input type="text" class="int-text" v-model="params.mname" />
                 </span>
             </div>
-            <div class="search_params">
+            <div ct="search_params">
                 <span>审核/状态</span>
                 <span>
                     <select class="int-text" >
@@ -43,40 +44,27 @@
                     </select>
                 </span>
             </div>
-            <div class="search_params">
+            <div>
                 <input type="button" value="确 定" class="green-int" />
                 <input type="button" value="确 定" class="yellow-int" />
             </div>
         </div>
         <div class="table_body">
-            <!--<table cellpadding="0" cellspacing="0" border="0" bgcolor="#dcdcdc" width="100%">-->
             <div class="head-list">
                 <table>
-                    <thead>
+                    <thead ct="head_names">
                     <tr>
                         <th style="text-align: center; width: 60px;" md="index">编号</th>
                         <th style="text-align: center; width: 30%;" md="mname">模块名称</th>
                         <th style="text-align: center; width: 50%;" md="maddress">模块地址</th>
                         <th style="text-align: center; width: 5%;" md="mtype">模块类别</th>
                         <th style="text-align: center; width: 15%;" md="createtime">创建时间</th>
+                        <th style="text-align: center; width: 140px;" md="operation">操作</th>
                     </tr>
                     </thead>
                 </table>
             </div>
-            <div class="body-list">
-                <vue-table v-bind:bean="bean"></vue-table>
-            </div>
-            <div class="table_page">
-                <div class="table_page-left">当前第 <num>1</num> / <pcount>270</pcount> 页,每页<size>10</size>条，共 <count>2696</count>条记录</div>
-                <div class="table_page-right">
-                    <a href="#">首页</a>
-                    <a href="#">上一步</a>
-                    <a href="#">下一步</a>
-                    <a href="#">尾页</a>
-                    <input type="text" name="text" />
-                    <a href="#" class="main_link">跳转</a>
-                </div>
-            </div>
+            <vue-table v-bind:searchName="searchName" v-bind:params="params" ></vue-table>
         </div>
     </div>
 </body>

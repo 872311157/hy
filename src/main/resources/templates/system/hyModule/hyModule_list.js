@@ -1,13 +1,28 @@
 $(function() {
-    new Vue({
-        el: '#hyTable',
+    var configMap = window.parent.configMap;
+    var vue = new Vue({
+        el: "#hyModule",
         data: {
-            bean:{
-                search_service: '/hy/hyModule/queryPageList',
-                params: {
-                    mname: ''
-                }
+            configMap: configMap,
+            searchName: 'queryPageList',
+            params: {
+                mname: ''
             }
+        },
+        methods: {
+
         }
     })
 })
+
+//var hyModule_list = function(){
+//    var page = 13;
+//    this.data = '3456';
+//    this.setPageInfo = function(){
+//        debugger
+//        HyTableObj.vueId = "hyModule";
+//        HyTableObj.searchName = "queryPageList";
+//    }
+//
+//}
+

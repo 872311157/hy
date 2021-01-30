@@ -39,9 +39,17 @@ public class HyModuleController {
     @RequestMapping("queryPageList")
     @ResponseBody
     public EntityBeanSet queryPageList(@RequestParam Map<String, String> params){
+        String pageNum = params.get("pageNum");
+        String pageSize = params.get("pageSize");
         String mname = params.get("mname");
         String mtype = params.get("mtype");
         Map<String, Object> par = new HashMap<String, Object>();
+        if (!StringUtils.isEmpty(pageNum)){
+            par.put("pageNum", Integer.parseInt(pageNum));
+        }
+        if (!StringUtils.isEmpty(pageSize)){
+            par.put("pageSize", Integer.parseInt(pageSize));
+        }
         if (!StringUtils.isEmpty(mname)){
             par.put("mname", mname);
         }
