@@ -1,18 +1,24 @@
-$(function() {
-    var configMap = window.parent.configMap;
-    var vue = new Vue({
-        el: "#hyModule",
-        data: {
-            configMap: configMap,
-            searchName: 'queryPageList',
-            params: {
-                mname: ''
-            }
-        },
-        methods: {
+//$(function() {
+//    var configMap = window.parent.configMap;
+//    var vue = new Vue({
+//        el: "#hyModule",
+//        data: {
+//            configMap: configMap,
+//            searchName: 'queryPageList',
+//            params: {
+//                mname: ''
+//            }
+//        },
+//        methods: {
+//
+//        }
+//    })
+//})
 
-        }
-    })
+$(function(){
+    HyTableObj.vueId = "hyModule";
+    HyTableObj.createVue();
+
 })
 
 //var hyModule_list = function(){
