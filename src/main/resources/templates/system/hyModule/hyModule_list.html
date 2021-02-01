@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,21 +15,18 @@
     <div id="hyModule" style="height: 100%;">
         <div class="table_search">
             <div ct="search_params">
-                <span>账号类型</span>
+                <span>类型</span>
                 <span>
-                    <select class="int-text" >
-                        <option>选项一</option>
-                        <option>选项二</option>
-                        <option>选项三</option>
-                        <option>选项四</option>
-                        <option>选项五</option>
+                    <select class="int-text" v-model="params.mType">
+                        <option value="0">分类</option>
+                        <option value="1">引用</option>
                     </select>
                 </span>
             </div>
             <div ct="search_params">
-                <span>账号/邮箱</span>
+                <span>模块名称:</span>
                 <span>
-                    <input type="text" class="int-text" v-model="params.mname" />
+                    <input type="text" class="int-text" v-model="params.mName" />
                 </span>
             </div>
             <div ct="search_params">
@@ -45,8 +42,9 @@
                 </span>
             </div>
             <div>
-                <input type="button" value="确 定" class="green-int" />
-                <input type="button" value="确 定" class="yellow-int" />
+                <input type="button" v-on:click="innerInsert" value="新 增" class="blue-int" />
+                <input type="button" v-on:click="innerRest" value="重 置" class="green-int" />
+                <input type="button" v-on:click="innerSearch" value="查 询" class="yellow-int" />
             </div>
         </div>
         <div class="table_body">
@@ -55,16 +53,18 @@
                     <thead ct="head_names">
                     <tr>
                         <th style="text-align: center; width: 60px;" md="index">编号</th>
-                        <th style="text-align: center; width: 30%;" md="mname">模块名称</th>
-                        <th style="text-align: center; width: 50%;" md="maddress">模块地址</th>
-                        <th style="text-align: center; width: 5%;" md="mtype">模块类别</th>
-                        <th style="text-align: center; width: 15%;" md="createtime">创建时间</th>
+                        <th style="text-align: center; width: 10%;" md="mName">模块名称</th>
+                        <th style="text-align: center; width: 50%;" md="mAddress">模块地址</th>
+                        <th style="text-align: center; width: 5%;" md="mType">模块类别</th>
+                        <th style="text-align: center; width: 15%;" md="createTime">创建时间</th>
+                        <th style="text-align: center; width: 20%;" md="imgUrl">图标</th>
                         <th style="text-align: center; width: 140px;" md="operation">操作</th>
                     </tr>
                     </thead>
                 </table>
             </div>
-            <vue-table v-bind:searchName="searchName" v-bind:params="params" ></vue-table>
+            <vue-table ref='VueTable' v-bind:searchName="searchName" v-bind:params="params" ></vue-table>
+
         </div>
     </div>
 </body>

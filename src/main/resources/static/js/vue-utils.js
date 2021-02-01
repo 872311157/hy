@@ -3,10 +3,10 @@ Vue.component('vue-tree2', {
     props: ['bean'],
     template: '<ol class="tree">'+
         '<li class="folderOne" v-for="module in modules">'+
-            '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" :nid="module.id">{{module.mname}}</label>'+
-            '<ol style="display: none;" v-for="child in module.childs" ><li class="file folderTwo"><label v-on:click="open_page" :nid="child.id" :psrc="child.maddress">{{child.mname}}</label></li></ol>'+
-        '<li>'+
-    '<ol>',
+            '<input v-if="box" type="checkbox" id="folder1"><label v-on:click="extend_nodes" v-bind:style="{\'background\': \'url(\'+module.imgUrl+\') no-repeat right center\', \'background-position\':\'3% 50%\'}" :nid="module.id">{{module.mName}}</label>'+
+            '<ol style="display: none;" v-for="child in module.childMs" ><li class="file folderTwo"><label v-on:click="open_page" :nid="child.id" :psrc="child.mAddress">{{child.mName}}</label></li></ol>'+
+        '</li>'+
+    '</ol>',
     data: function () {
         this.checkedNid = '';
         this.modules = this.init_modules();
@@ -71,20 +71,15 @@ Vue.component('vue-tree2', {
                 var secondName = secondNode.children("label:first").text();
                 this.$parent.bean.secondName = secondName;
             }
-            if(this.checkedMs){
-
-            }else{
+            if(!this.checkedMs){
                 this.checkedNid = target.getAttribute("nid");
             }
+            $(".active").each(function(i, item){
+                item.className = "";
+            })
 
             var ol = target.parentElement.parentElement;
-            var className = ol.className;// += "active"
-            if(className.indexOf("active") > -1){
-               className = className.replace("active", " ");
-            }else{
-                className += " active";
-            }
-            ol.className = className;
+            ol.className = "active";
             var src = target.getAttribute("psrc");
             var server = this.$parent.bean.config.server;
             this.$parent.bean.pageUrl = server + src;
@@ -97,8 +92,9 @@ Vue.component('vue-tree2', {
 **/
 Vue.component('vue-table', {
     props: ['searchName', 'params'],
-    template: '<div class="body-list"><table><tbody><tr v-for="(key, value) in sites.result">@tdHtml</tr></tbody></table></div>' +
-        '<div class="table_page"><div class="table_page-left">当前第 {{sites.pageNum}} / {{sites.pageCount}} 页,每页{{sites.pageSize}}条，共 {{sites.countNum}}条记录</div><div class="table_page-right"><b v-on:click="first_page">首页</b><b v-on:click="prev_page">上一页</b><b v-on:click="next_page">下一页</b><b v-on:click="last_page">尾页</b><input type="text" v-model="toPageNum" /><b v-on:click="to_page">跳转</b></div></div>',
+    template: '<div style="height:100%;"><div class="body-list"><table><tbody><tr v-for="(value, key) in sites.result">@tdHtml</tr></tbody></table></div>' +
+        '<div class="table_page"><div class="table_page-left">当前第 {{sites.pageNum}} / {{sites.pageCount}} 页,每页{{sites.pageSize}}条，共 {{sites.countNum}}条记录</div><div class="table_page-right"><b v-on:click="first_page">首页</b><b v-on:click="prev_page">上一页</b><b v-on:click="next_page">下一页</b><b v-on:click="last_page">尾页</b><input type="text" v-model="toPageNum" /><b v-on:click="to_page">跳转</b></div></div>'+
+        '</div>',
     data: function () {
         debugger
         this.sites = this.init_table();
@@ -135,6 +131,7 @@ Vue.component('vue-table', {
                 data: this.params,
                 dataType: "json",
                 success:function(data){
+                    console.log(JSON.stringify(data));
                     sites = data;
                 },
                 error:function(i, s, e){
@@ -147,11 +144,9 @@ Vue.component('vue-table', {
             return sites;
         },
         setTdHtml: function(arg){
-            debugger
             var tdHtml = "";
             var ths = $("thead[ct='head_names']").find("th");
             $(ths).each(function(index, item){
-                debugger
                 var width = item.style.width;
                 var md = item.getAttribute("md");
                 var styleHtml = "text-align: center; width: " + width + ";";
@@ -167,13 +162,11 @@ Vue.component('vue-table', {
         },
         first_page: function(arg){
             //首页
-            debugger
             this.pageNum = 1;
             this.sites = this.init_table();
         },
         prev_page: function(arg){
             //上一页
-            debugger
             if (this.pageNum > 1){
                 this.pageNum = this.pageNum - 1;
                 this.sites = this.init_table();
@@ -181,7 +174,6 @@ Vue.component('vue-table', {
         },
         next_page: function(arg){
             //下一页
-            debugger
             if (this.pageNum < this.pageCount){
                 this.pageNum = this.pageNum + 1;
                 this.sites = this.init_table();
@@ -189,14 +181,15 @@ Vue.component('vue-table', {
         },
         last_page: function(arg){
             //尾页
-            debugger
             this.pageNum = parseInt(this.pageCount);
             this.sites = this.init_table();
         },
         to_page: function(arg){
             //跳转
-            debugger
             this.pageNum = parseInt(this.toPageNum);
+            this.sites = this.init_table();
+        },
+        search: function(){
             this.sites = this.init_table();
         }
     }

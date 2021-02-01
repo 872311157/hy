@@ -41,8 +41,8 @@ public class HyModuleController {
     public EntityBeanSet queryPageList(@RequestParam Map<String, String> params){
         String pageNum = params.get("pageNum");
         String pageSize = params.get("pageSize");
-        String mname = params.get("mname");
-        String mtype = params.get("mtype");
+        String mName = params.get("mName");
+        String mType = params.get("mType");
         Map<String, Object> par = new HashMap<String, Object>();
         if (!StringUtils.isEmpty(pageNum)){
             par.put("pageNum", Integer.parseInt(pageNum));
@@ -50,11 +50,11 @@ public class HyModuleController {
         if (!StringUtils.isEmpty(pageSize)){
             par.put("pageSize", Integer.parseInt(pageSize));
         }
-        if (!StringUtils.isEmpty(mname)){
-            par.put("mname", mname);
+        if (!StringUtils.isEmpty(mName)){
+            par.put("mName", mName);
         }
-        if (!StringUtils.isEmpty(mtype)){
-            par.put("mtype", mtype);
+        if (!StringUtils.isEmpty(mType)){
+            par.put("mType", Integer.parseInt(mType));
         }
         EntityBeanSet entityBeanSet = this.hyModuleService.queryPageList(par);
         return entityBeanSet;
@@ -66,9 +66,9 @@ public class HyModuleController {
         List<HyModule> modules = null;
         String userid = params.get("userid");
         if(!StringUtils.isEmpty(userid)){
-            String roleid = this.hyRedisUtils.get(userid);
-            if(!StringUtils.isEmpty(roleid)){
-                modules = this.hyModuleService.queryModules(Integer.parseInt(roleid));
+            String roleId = this.hyRedisUtils.get(userid);
+            if(!StringUtils.isEmpty(roleId)){
+                modules = this.hyModuleService.queryModules(Integer.parseInt(roleId));
                 if(null != modules && modules.size() > 0){
                     this.queryChildModule(modules);
                 }
@@ -84,12 +84,12 @@ public class HyModuleController {
      */
     public void queryChildModule(List<HyModule> modules){
         for(HyModule module : modules){
-            if(module.getMtype() == 0){
+            if(module.getmType() == 0){
                 Map<String, Object> params = new HashMap<String, Object>();
-                params.put("parentid", module.getId());
-                List<HyModule> childs = this.hyModuleService.queryListByParam(params);
-                module.setChilds(childs);
-                this.queryChildModule(childs);
+                params.put("parentId", module.getId());
+                List<HyModule> childMs = this.hyModuleService.queryListByParam(params);
+                module.setChildMs(childMs);
+                this.queryChildModule(childMs);
             }
         }
     }

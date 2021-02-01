@@ -16,8 +16,8 @@
             new Vue({
                 el: '#login',
                 data: {
-                    username: '',
-                    password: ''
+                    username: 'system',
+                    password: 'system'
                 }
             })
         }
@@ -29,8 +29,8 @@
 <div class="page-container" id="login">
     <h1>登录(Login)</h1>
     <form action="./login/submit" method="post">
-        <input type="text" v-model="username" name="username" class="username" placeholder="请输入您的用户名！" value="system">
-        <input type="password" v-model="password" name="password" class="password" placeholder="请输入您的用户密码！" value="system">
+        <input type="text" v-model="username" name="username" class="username" placeholder="请输入您的用户名！">
+        <input type="password" v-model="password" name="password" class="password" placeholder="请输入您的用户密码！">
         <button type="submit" class="submit_button">登录</button>
     </form>
 </div>

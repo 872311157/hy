@@ -22,6 +22,7 @@ body, html{
     background: #393939;
     width: 100%;
     overflow: hidden;
+    border-bottom: 1px solid #afaaaa;
     /*height: 10%;*/
 }
 .main_logo{
@@ -71,7 +72,7 @@ body, html{
 
 .main_left{
     width:12%;
-    height:820px;
+    height:825px;
     float: left;
 }
 .main_right{

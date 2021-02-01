@@ -1,7 +1,7 @@
 .tree {
     margin: 0;
     padding: 0;
-    background-color:#f2f2f2;
+    background-color:#393939;
     overflow: hidden;
     height: 100%;
 }
@@ -27,25 +27,47 @@
 }*/
 
 /*给有子菜单的菜单项添加背景图标*/
-.tree li label {
-    width: 100%;
+/*.tree li label {
+    *//*width: 100%;*//*
     cursor: pointer;
     display: block;
     margin:0 0 0 -50px;
     padding: 15px 10px 15px 70px;
-    background: url(../../images/cp-detail-arrow-b.png) no-repeat right center;
-    background-position:95% 50%;
+    background: url(/hy/img/1_close.png) no-repeat right center;
+    background-position:20% 50%;
     white-space:nowrap;
     overflow:hidden;
     text-overflow: ellipsis;
     border-bottom: 1px solid #afaaaa;
+}*/
+
+.tree li label {
+    cursor: pointer;
+    display: block;
+    border-bottom: 1px solid #afaaaa;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
 }
+
+.folderOne>label{
+    padding: 15px 10px 15px 25px;
+    /*background: url(/hy/img/1_close.png) no-repeat right center;*/
+    background-position:3% 50%;
+}
+
+.folderTwo>label{
+    /*width: 100%;*/
+    margin:0 0 0 -50px;
+    padding: 15px 10px 15px 70px;
+}
+
 .tree li label:hover,li label:focus{
-    background-color:#a7a7a7;
+    background-color:#ba5a3;
     color:#fff;
 }
 .active{
-    background-color:#a7a7a7;
+    background-color:#3ba5a3;
     color:#fff;
 }
 /*清除所有展开的子菜单的display*/
@@ -78,10 +100,14 @@
 }
 /*不同层级的菜单字体大小不同*/
 .tree .folderOne{
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
 }
 .tree .folderTwo{
     font-size:16px;
+    font-weight: 500;
+    color: white;
 }
 .tree .folderThree{
     font-size:14px;

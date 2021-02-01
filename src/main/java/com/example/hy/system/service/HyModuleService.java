@@ -34,7 +34,7 @@ public class HyModuleService implements IHyModuleService{
     }
 
     @Override
-    public List<HyModule> queryModules(Integer roleid) {
-        return this.hyModuleMapper.queryModules(roleid);
+    public List<HyModule> queryModules(Integer roleId) {
+        return this.hyModuleMapper.queryModules(roleId);
     }
 }

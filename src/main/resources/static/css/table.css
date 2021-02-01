@@ -51,7 +51,7 @@ table{
 }
 .body-list{
     overflow: auto;
-    height: 86%;
+    height: 87%;
     /*height: 563px;*/
 }
 
@@ -130,6 +130,16 @@ table{
 .int-text{
     padding: 8px 10px;
     border: 1px solid #dcdcdc;
+}
+.blue-int{
+    background: #0183fc;
+    color: #fff;
+    padding: 6px 20px;
+    margin: 2px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
 }
 .green-int{
     background: #21b6b4;

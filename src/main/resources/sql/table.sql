@@ -69,9 +69,10 @@ CREATE TABLE hymodule(
     mname VARCHAR(128), --模型名称
     maddress VARCHAR(512), --模型地址
     parentid INTEGER, --父模型id
-    mtype INTEGER --模型类型0分类，1引用
+    mtype INTEGER, --模型类型0分类，1引用
+    imgurl VARCHAR(500) --图标
 );
---ALTER TABLE bootmodule ADD mtype INTEGER; --模型类型0分类，1引用
+--ALTER TABLE hymodule ADD mtype INTEGER; --模型类型0分类，1引用
 select * from hymodule;
 --delete from hymodule
 insert into hymodule(id, mname, maddress, parentid, mtype) values(1, '系统管理', '', 0, 0);
@@ -99,14 +100,14 @@ insert into hy_rolemodule(roleid, moduleid) values(0, 1)
 
 
 --创建用户模型关联视图
---drop view view_rolemodules;
+--drop view view_roleModules;
 
-create or replace VIEW view_rolemodules AS
-select rm.roleid, rm.moduleid, m.mname, m.parentid, m.mtype from hyrole r
-left join hy_rolemodule rm on r.id = rm.roleid
-left join hymodule m on rm.moduleid = m.id where m.mtype=0 and parentid=0;
+create or replace VIEW view_roleModules AS
+select rm.roleId, rm.moduleId, m.mName, m.parentId, m.mType, m.imgUrl from hyrole r
+left join hy_roleModule rm on r.id = rm.roleId
+left join hyModule m on rm.moduleId = m.id where m.mType=0 and parentId=0;
 
-select * from view_rolemodules;
+select * from view_roleModules;
 
 
 

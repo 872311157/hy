@@ -23,8 +23,8 @@ public interface IHyModuleService {
 
     /**
      * 根据角色id查询对应的模块
-     * @param roleid
+     * @param roleId
      * @return
      */
-    public List<HyModule> queryModules(Integer roleid);
+    public List<HyModule> queryModules(Integer roleId);
 }

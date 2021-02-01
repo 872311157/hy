@@ -13,25 +13,25 @@
     <select id="queryPageList" resultType="com.example.hy.system.entity.HyModule" parameterType="java.util.Map">
         select * from hymodule
         <where>
-            <if test="mname!=null">
-                and mname = like concat('%',#{mname},'%')
+            <if test="mName!=null">
+                and mName like concat('%',#{mName},'%')
             </if>
-            <if test="mtype!=null">
-                and mtype = #{mtype}
+            <if test="mType!=null">
+                and mType = #{mType}
             </if>
         </where>
-        order by createtime desc LIMIT #{pageSize} OFFSET #{startIndex}
+        order by createTime desc LIMIT #{pageSize} OFFSET #{startIndex}
         <!--mysql limit #{startIndex},#{pageSize}-->
     </select>
 
     <select id="queryPageCount" resultType="java.lang.Integer" parameterType="java.util.Map">
         select count(1) from hymodule
         <where>
-            <if test="mname!=null">
-                and mname = like concat('%',#{mname},'%')
+            <if test="mName!=null">
+                and mName like concat('%',#{mName},'%')
             </if>
-            <if test="mtype!=null">
-                and mtype = #{mtype}
+            <if test="mType!=null">
+                and mType = #{mType}
             </if>
         </where>
     </select>
@@ -42,20 +42,20 @@
             <if test="id!=null">
                 and id = #{id}
             </if>
-            <if test="mname!=null">
-                and mname = like concat('%',#{mname},'%')
+            <if test="mName!=null">
+                and mName = like concat('%',#{mName},'%')
             </if>
-            <if test="mtype!=null">
-                and mtype = #{mtype}
+            <if test="mType!=null">
+                and mType = #{mType}
             </if>
-            <if test="parentid!=null">
-                and parentid = #{parentid}
+            <if test="parentId!=null">
+                and parentId = #{parentId}
             </if>
         </where>
     </select>
 
     <select id="queryModules" resultType="com.example.hy.system.entity.HyModule" parameterType="java.lang.Integer">
-        select moduleid id,mname ,parentid ,mtype from view_rolemodules where roleid = #{roleid}
+        select moduleId id,mName ,parentId ,mType ,imgUrl from view_roleModules where roleId = #{roleId}
     </select>
 <!--    <insert id="" parameterType=""></insert>-->
 <!--    <update id=""></update>-->
