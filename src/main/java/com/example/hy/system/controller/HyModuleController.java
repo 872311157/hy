@@ -1,6 +1,9 @@
 package com.example.hy.system.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.example.hy.base.controller.BaseController;
 import com.example.hy.system.entity.HyModule;
+import com.example.hy.system.entity.HyUser;
 import com.example.hy.system.service.IHyModuleService;
 import com.example.hy.util.base.EntityBeanSet;
 import com.example.hy.util.redis.HyRedisTemplate;
@@ -19,7 +22,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/hyModule")
-public class HyModuleController {
+public class HyModuleController extends BaseController{
 
     @Autowired
     private HyRedisTemplate hyRedisUtils;
@@ -60,11 +63,20 @@ public class HyModuleController {
         return entityBeanSet;
     }
 
+    /**
+     * 获取当前登录用户权限
+     * @param params
+     * @return
+     */
     @RequestMapping("queryModules")
     @ResponseBody
     public List<HyModule> queryModules(@RequestParam Map<String, String> params){
         List<HyModule> modules = null;
         String userid = params.get("userid");
+
+        HyUser hyUser = this.getCurrentUser();
+        System.out.println(JSON.toJSONString(hyUser));
+
         if(!StringUtils.isEmpty(userid)){
             String roleId = this.hyRedisUtils.get(userid);
             if(!StringUtils.isEmpty(roleId)){

@@ -194,3 +194,38 @@ Vue.component('vue-table', {
         }
     }
 })
+
+
+Vue.component('vue-page', {
+    props: [],
+    template: '<div class="vue-page" v-bind:style="{\'display\': display}">'+
+                '<div class="main" v-bind:style="{\'width\': width, \'height\':height}">'+
+                    '<div class="top">'+
+                        '<span class="close" v-on:click="closePage">X</span>'+
+                        '<span>弹出层</span>'+
+                    '</div>'+
+                    '<div class="middle"><iframe src="http://127.0.0.1:8090/hy/system/hyModule/hyModule_add.html"></iframe></div>'+
+                    '<div class="bottom">'+
+                        '<input class="none-int" type="button" value="取消"/>'+
+                        '<input class="blue-int" type="button" value="确定"/>'+
+                    '</div>'+
+                '</div>'+
+              '</div>',
+    data: function () {
+        return {
+            display: 'none',
+            width: '0px',
+            height: '0px'
+        }
+    },
+    methods: {
+        loadInsertPage: function(width, height){
+            this.display = '';
+            this.width = width;
+            this.height = height;
+        },
+        closePage: function(){
+            this.display = 'none';
+        }
+    }
+})

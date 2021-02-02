@@ -35,7 +35,10 @@
                     }
                 },
                 innerInsert: function(){
-
+                    var vueInfoPage = this.$refs.VueInfoPage;
+                    if(vueInfoPage){
+                        vueInfoPage.loadInsertPage("500px", "500px");
+                    }
                 },
                 innerModify: function(arg){
 

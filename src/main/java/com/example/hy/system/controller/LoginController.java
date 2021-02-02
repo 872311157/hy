@@ -1,9 +1,9 @@
 package com.example.hy.system.controller;
 
+import com.example.hy.base.controller.BaseController;
 import com.example.hy.system.entity.HyUser;
 import com.example.hy.system.service.IHyRoleService;
 import com.example.hy.system.service.IHyUserService;
-import com.example.hy.util.cache.MapCacheEntity;
 import com.example.hy.util.redis.HyRedisTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -22,7 +21,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/login")
-public class LoginContoller {
+public class LoginController extends BaseController{
 
     @Autowired
     private IHyUserService hyUserService;
@@ -50,13 +49,13 @@ public class LoginContoller {
         {
             model = new ModelAndView("redirect:main");//重定向主页面
             //缓存当前用户登录的角色
-            Integer roleid = this.hyRoleService.queryRoleidByUserid(hyUser.getId());
-            String key = hyUser.getId().toString();
-            this.hyRedisUtils.set(key, roleid.toString());
-
+            Integer roleId = this.hyRoleService.queryRoleidByUserid(hyUser.getId());
+            if (null != roleId){
+                String key = hyUser.getId().toString();
+                this.hyRedisUtils.set(key, roleId.toString());
+            }
             //使用session传递用户数据
-            HttpSession session = request.getSession();
-            session.setAttribute("user",hyUser);
+            this.setSession("loginUser",hyUser);
         }else {
             model.setViewName("redirect:error");
         }
@@ -64,7 +63,7 @@ public class LoginContoller {
     }
 
     @ResponseBody
-    @RequestMapping("/defaultconfig")
+    @RequestMapping("/defaultConfig")
     public Map<String, Object> getDefaultSystem(){
         Map<String, Object> systemConfig = this.hyRedisUtils.hmget("systemConfig");
         return systemConfig;

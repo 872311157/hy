@@ -22,7 +22,7 @@ public class MainInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         try {
             //统一拦截（查询当前session是否存在user）(这里user会在每次登陆成功后，写入session)
-            HyUser user=(HyUser)request.getSession().getAttribute("user");
+            HyUser user=(HyUser)request.getSession().getAttribute("loginUser");
             if(user!=null){
                 return true;
             }

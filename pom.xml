@@ -81,6 +81,12 @@
             </exclusions>
         </dependency>
 
+        <!--Spring安全管理框架-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+        </dependency>
+
         <!--swagger-->
         <dependency>
             <groupId>io.springfox</groupId>

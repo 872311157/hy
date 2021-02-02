@@ -34,7 +34,7 @@
             $.ajax({
                 type: "post",
                 async: false,//同步，异步
-                url: "/hy/login/defaultconfig", //请求的服务端地址
+                url: "/hy/login/defaultConfig", //请求的服务端地址
                 dataType: "json",
                 success:function(data){
                     console.log(data);
@@ -52,13 +52,13 @@
 <body>
 <div id="app" class="main_body">
     <div class="main_top">
-        <input id="userid" hidden="hidden" type="text" th:value="${session.user.id}"/>
-        <input id="username" hidden="hidden" type="text" th:value="${session.user.username}"/>
+        <input id="userid" hidden="hidden" type="text" th:value="${session.loginUser.id}"/>
+        <input id="username" hidden="hidden" type="text" th:value="${session.loginUser.username}"/>
         <div class="main_logo"><img src="../img/logo.png" /></div>
         <div class="main_green">
             <div class="main_exit">
                 <span class="main_span">
-                    <span class="main_yanse" th:text="${session.user.username}"></span>
+                    <span class="main_yanse" th:text="${session.loginUser.username}"></span>
                 </span>
                 <a href="#" class="help">帮助</a>
                 <a href="#" class="exit">退出</a>
