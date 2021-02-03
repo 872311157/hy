@@ -204,10 +204,6 @@ Vue.component('vue-page', {
                         '<span>弹出层</span>'+
                     '</div>'+
                     '<div class="middle" v-bind:style="{\'height\':middleHeight}"><iframe v-bind:src="src"></iframe></div>'+
-//                    '<div class="bottom">'+
-//                        '<input class="none-int" type="button" v-on:click="closePage" value="取消"/>'+
-//                        '<input class="blue-int" type="button" v-on:click="savePage" value="确定"/>'+
-//                    '</div>'+
                 '</div>'+
               '</div>',
     data: function () {
@@ -223,7 +219,7 @@ Vue.component('vue-page', {
         loadInsertPage: function(src, width, height){
         debugger;
             this.src = src;
-            this.middleHeight = parseInt(height.substring(0,height.length-2)) - 100 + "px";
+            this.middleHeight = parseInt(height.substring(0,height.length-2)) - 50 + "px";
             this.display = '';
             this.width = width;
             this.height = height;

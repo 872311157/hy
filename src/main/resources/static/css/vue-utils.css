@@ -194,11 +194,11 @@ html, body{
     padding: 8px 10px;
     border: 1px solid #dcdcdc;
 }
-.vue-page .infoBottom{
+.infoPage .infoBottom{
     height:50px;
     border-top: 1px solid #afaaaa;
 }
-.vue-page .infoBottom input{
+.infoPage .infoBottom input{
     margin-left: 120px;
     margin-top: 7px;
 }
