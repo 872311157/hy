@@ -160,7 +160,7 @@ html, body{
     line-height: 45px;
 }
 .vue-page .top{
-    height: 10%;
+    height: 50px;
     border-bottom: 1px solid #afaaaa;
     color: #73879C;
     font-size: 18px;
@@ -168,18 +168,37 @@ html, body{
     line-height: 2.73;
 }
 .vue-page .middle{
-    height:80%;
+    /*height:80%;*/
 }
 .vue-page .middle iframe{
     height:100%;
     width:100%;
     border-style:unset;
 }
-.vue-page .bottom{
-    height:10%;
+.infoPage{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.infoPage .spanOne{
+    margin-left: 30px;
+    margin-top: 10px;
+}
+.infoPage .spanOne span:first-child{
+    float: left;
+    width: 100px;
+    margin-left: 15px;
+}
+.infoPage .spanOne input,.infoPage .spanOne select{
+    width: 270px;
+    padding: 8px 10px;
+    border: 1px solid #dcdcdc;
+}
+.vue-page .infoBottom{
+    height:50px;
     border-top: 1px solid #afaaaa;
 }
-.vue-page .bottom input{
+.vue-page .infoBottom input{
     margin-left: 120px;
     margin-top: 7px;
 }

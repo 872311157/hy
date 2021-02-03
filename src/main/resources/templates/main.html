@@ -13,10 +13,11 @@
         window.onload = function(){
             debugger
             var userid = $("#userid").val();
-            configMap = getDefaultValue();
+            configMap = this.getDefaultValue();
             new Vue({
-                el: '#app',
+                el: '#main',
                 data: {
+                    server: configMap.server,
                     bean:{
                         firstName: '',
                         secondName: '',
@@ -50,7 +51,7 @@
     </script>
 </head>
 <body>
-<div id="app" class="main_body">
+<div id="main" class="main_body">
     <div class="main_top">
         <input id="userid" hidden="hidden" type="text" th:value="${session.loginUser.id}"/>
         <input id="username" hidden="hidden" type="text" th:value="${session.loginUser.username}"/>

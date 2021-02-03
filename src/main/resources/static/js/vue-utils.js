@@ -1,4 +1,4 @@
-/*树形结构*/
+/*菜单*/
 Vue.component('vue-tree2', {
     props: ['bean'],
     template: '<ol class="tree">'+
@@ -91,7 +91,7 @@ Vue.component('vue-tree2', {
 *表格
 **/
 Vue.component('vue-table', {
-    props: ['searchName', 'params'],
+    props: ['config', 'params'],
     template: '<div style="height:100%;"><div class="body-list"><table><tbody><tr v-for="(value, key) in sites.result">@tdHtml</tr></tbody></table></div>' +
         '<div class="table_page"><div class="table_page-left">当前第 {{sites.pageNum}} / {{sites.pageCount}} 页,每页{{sites.pageSize}}条，共 {{sites.countNum}}条记录</div><div class="table_page-right"><b v-on:click="first_page">首页</b><b v-on:click="prev_page">上一页</b><b v-on:click="next_page">下一页</b><b v-on:click="last_page">尾页</b><input type="text" v-model="toPageNum" /><b v-on:click="to_page">跳转</b></div></div>'+
         '</div>',
@@ -110,11 +110,10 @@ Vue.component('vue-table', {
         init_table: function(){
             debugger
             var sites;
-            var configMap = this.$parent.configMap;
-            var moduleName = this.$parent.$el.getAttribute("id");
-            var search_service = this.$parent.configMap.server;
-            if(this.search_service){
-                search_service += moduleName + "/" + this.searchName;
+            var moduleName = this.config.moduleName;
+            var search_service = this.config.configMap.server;
+            if(this.config.searchName){
+                search_service += moduleName + "/" + this.config.searchName;
             }else{
                 search_service += moduleName + "/queryPageList";
             }
@@ -204,28 +203,37 @@ Vue.component('vue-page', {
                         '<span class="close" v-on:click="closePage">X</span>'+
                         '<span>弹出层</span>'+
                     '</div>'+
-                    '<div class="middle"><iframe src="http://127.0.0.1:8090/hy/system/hyModule/hyModule_add.html"></iframe></div>'+
-                    '<div class="bottom">'+
-                        '<input class="none-int" type="button" value="取消"/>'+
-                        '<input class="blue-int" type="button" value="确定"/>'+
-                    '</div>'+
+                    '<div class="middle" v-bind:style="{\'height\':middleHeight}"><iframe v-bind:src="src"></iframe></div>'+
+//                    '<div class="bottom">'+
+//                        '<input class="none-int" type="button" v-on:click="closePage" value="取消"/>'+
+//                        '<input class="blue-int" type="button" v-on:click="savePage" value="确定"/>'+
+//                    '</div>'+
                 '</div>'+
               '</div>',
     data: function () {
         return {
+            src: '', // http://127.0.0.1:8090/hy/system/hyModule/hyModule_add.html
+            middleHeight: '0px',
             display: 'none',
             width: '0px',
             height: '0px'
         }
     },
     methods: {
-        loadInsertPage: function(width, height){
+        loadInsertPage: function(src, width, height){
+        debugger;
+            this.src = src;
+            this.middleHeight = parseInt(height.substring(0,height.length-2)) - 100 + "px";
             this.display = '';
             this.width = width;
             this.height = height;
         },
+        savePage: function(){
+
+        },
         closePage: function(){
             this.display = 'none';
+            this.src = "";
         }
     }
 })

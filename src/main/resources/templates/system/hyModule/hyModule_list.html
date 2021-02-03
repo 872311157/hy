@@ -7,12 +7,12 @@
     <script src="/hy/js/jquery-3.5.1.js"></script>
     <script src="/hy/js/vue.js"></script>
     <script src="/hy/js/vue-utils.js"></script>
-    <script src="/hy/js/hyTable.js"></script>
+    <script src="/hy/js/hyPageBase.js"></script>
     <script src="/hy/system/hyModule/hyModule_list.js"></script>
 </head>
 <body style="overflow: hidden;">
     <!-- right -->
-    <div id="hyModule" style="height: 100%;">
+    <div id="hyModule_list" style="height: 100%;">
         <div class="table_search">
             <div>
                 <span>类型</span>
@@ -42,7 +42,7 @@
                 </span>
             </div>
             <div>
-                <input type="button" v-on:click="innerInsert" value="新 增" class="blue-int" />
+                <input type="button" v-on:click="openInsertPage" value="新 增" class="blue-int" />
                 <input type="button" v-on:click="innerRest" value="重 置" class="green-int" />
                 <input type="button" v-on:click="innerSearch" value="查 询" class="yellow-int" />
             </div>
@@ -63,7 +63,7 @@
                     </thead>
                 </table>
             </div>
-            <vue-table ref='VueTable' v-bind:searchName="searchName" v-bind:params="params" ></vue-table>
+            <vue-table ref="VueTable" v-bind:config="config" v-bind:params="params"></vue-table>
         </div>
         <vue-page ref="VueInfoPage"></vue-page>
     </div>
