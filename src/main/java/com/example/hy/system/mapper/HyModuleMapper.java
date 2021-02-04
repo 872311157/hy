@@ -11,6 +11,35 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface HyModuleMapper {
+
+    /**
+     * 保存
+     * @param hyModule
+     * @return
+     */
+    public Integer save(HyModule hyModule);
+
+    /**
+     * 修改
+     * @param hyModule
+     * @return
+     */
+    public Integer modify(HyModule hyModule);
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    public Integer delete(Integer id);
+
+    /**
+     * 查询
+     * @param id
+     * @return
+     */
+    public HyModule query(Integer id);
+
     /**
      * 查询
      * @param params

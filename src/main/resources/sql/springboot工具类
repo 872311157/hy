@@ -1,0 +1,58 @@
+ClassPathResource 在类路径下读取资源
+
+public final String getPath()
+public boolean exists()
+public InputStream getInputStream()
+
+WebUtils 获取web资源工具类
+
+public static String getRealPath(ServletContext servletContext, String path)
+public static Object getSessionAttribute(HttpServletRequest request, String name)
+public static File getTempDir(ServletContext servletContext)
+
+ServletRequestUtils 提供获取请求参数 并自动类型转换的功能
+
+public static Integer getIntParameter(ServletRequest request, String name)
+public static int[] getIntParameters(ServletRequest request, String name)
+public static Long getLongParameter(ServletRequest request, String name)
+
+StringUtils 提供对字符串操作的工具类
+public static String[] split(String toSplit, String delimiter)
+public static String collectionToCommaDelimitedString(Collection<?> coll)
+public static boolean hasLength(String str)
+
+SerializationUtils 提供序列化与反序列化
+public static byte[] serialize(Object object)
+public static Object deserialize(byte[] bytes)
+
+FactoryBean 通过实现该接口可以将我们自定义的Bean注入到Spring的容器当中去
+public interface FactoryBean {
+T getObject() throws Exception;
+Class<?> getObjectType();
+boolean isSingleton();
+}
+
+ApplicationContextAware 实现这个接口可以将 ApplicationContext 注入进来
+public interface ApplicationContextAware extends Aware {
+void setApplicationContext(ApplicationContext applicationContext) throws BeansException;
+}
+
+InitializingBean 实现该接口可以做一些初始化动作，afterPropertiesSet方法会在容器初始化后被自动调用
+public interface InitializingBean {
+void afterPropertiesSet() throws Exception;
+}
+
+DisposableBean 实现该接口可以再Spring容器销毁时调用，可以在这个方法中做一些比如清理资源的动作
+public interface DisposableBean {
+void destroy() throws Exception;
+}
+
+BeanNameAware 实现该接口，Spring容器在启动后会把当前Bean的名字注入进来
+public interface BeanNameAware extends Aware {
+void setBeanName(String name);
+}
+
+ResourceLoaderAware 实现该接口可以注入ResourceLoader对象，通过它可以很方便的加载一些系统资源
+public interface ResourceLoaderAware extends Aware {
+void setResourceLoader(ResourceLoader resourceLoader);
+}

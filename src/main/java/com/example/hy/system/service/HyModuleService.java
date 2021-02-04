@@ -16,6 +16,26 @@ public class HyModuleService implements IHyModuleService{
     private HyModuleMapper hyModuleMapper;
 
     @Override
+    public Integer save(HyModule hyModule) {
+        return this.hyModuleMapper.save(hyModule);
+    }
+
+    @Override
+    public Integer modify(HyModule hyModule) {
+        return this.hyModuleMapper.modify(hyModule);
+    }
+
+    @Override
+    public Integer delete(Integer id) {
+        return this.hyModuleMapper.delete(id);
+    }
+
+    @Override
+    public HyModule query(Integer id) {
+        return this.hyModuleMapper.query(id);
+    }
+
+    @Override
     public EntityBeanSet queryPageList(Map<String, Object> params) {
         Integer countNum = this.hyModuleMapper.queryPageCount(params);
         Integer pageNum = (Integer) (StringUtils.isEmpty(params.get("pageNum"))?1:params.get("pageNum"));

@@ -97,6 +97,7 @@ Vue.component('vue-table', {
         '</div>',
     data: function () {
         debugger
+        this.parentPageInfo = this.$parent.pageInfo;
         this.sites = this.init_table();
         var tdHtml = this.setTdHtml(this.items);
         console.log(tdHtml);
@@ -150,7 +151,7 @@ Vue.component('vue-table', {
                 var md = item.getAttribute("md");
                 var styleHtml = "text-align: center; width: " + width + ";";
                 if("operation" == md){
-                    tdHtml += "<td style='" + styleHtml + "' md='" + md + "'><a class='blue-xt'>查看</a><a class='yellow-xt'>修改</a><a class='red-xt'>删除</a></td>";
+                    tdHtml += "<td style='" + styleHtml + "' md='" + md + "'><a class='blue-xt' v-bind:ids='value.id' v-on:click='openDetailPage'>查看</a><a class='yellow-xt' v-bind:ids='value.id' v-on:click='openModifyPage'>修改</a><a class='red-xt' v-bind:ids='value.id' v-on:click='innerDelete'>删除</a></td>";
                 }else if("index" == md){
                     tdHtml += "<td style='" + styleHtml + "' md='index'>{{key + 1}}</td>";
                 }else{
@@ -158,6 +159,37 @@ Vue.component('vue-table', {
                 }
             })
             return tdHtml;
+        },
+        innerDelete: function(arg){
+            debugger
+            var _this = this;
+            var id = arg.target.getAttribute("ids");
+            var del_service = this.parentPageInfo.configMap.server + this.parentPageInfo.moduleName + "/delete";
+            var bean = {id: id};
+            $.ajax({
+                type: "post",
+                async: false,//同步，异步
+                url: del_service, //请求的服务端地址
+                data: bean,
+                dataType: "json",
+                success:function(data){
+                    _this.$parent.closePage();
+                    _this.search();
+                },
+                error:function(i, s, e){
+                    alert('error'); //错误的处理
+                }
+            });
+
+        },
+        openModifyPage: function(arg){
+            debugger
+            var id = arg.target.getAttribute("ids");
+            this.$parent.openModifyPage(id);
+        },
+        openDetailPage: function(arg){
+            debugger
+            var id = arg.target.getAttribute("ids");
         },
         first_page: function(arg){
             //首页
@@ -216,16 +248,12 @@ Vue.component('vue-page', {
         }
     },
     methods: {
-        loadInsertPage: function(src, width, height){
-        debugger;
-            this.src = src;
-            this.middleHeight = parseInt(height.substring(0,height.length-2)) - 50 + "px";
+        loadPageInfo: function(temp){
+            this.src = temp.src;
+            this.middleHeight = parseInt(temp.height.substring(0,temp.height.length-2)) - 50 + "px";
             this.display = '';
-            this.width = width;
-            this.height = height;
-        },
-        savePage: function(){
-
+            this.width = temp.width;
+            this.height = temp.height;
         },
         closePage: function(){
             this.display = 'none';

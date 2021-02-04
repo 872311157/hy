@@ -10,6 +10,43 @@
 <!--        <result column="" jdbcType="TIMESTAMP" property=""/>-->
 <!--    </resultMap>-->
 <!--    <select id="" resultMap=""></select>-->
+    <insert id="save" parameterType="com.example.hy.system.entity.HyModule">
+        insert into hymodule(createTime, mName, mAddress, parentId, mType, imgUrl) values(#{createTime}, #{mName}, #{mAddress}, #{parentId}, #{mType}, #{imgUrl})
+    </insert>
+
+    <update id="modify" parameterType="com.example.hy.system.entity.HyModule">
+        update hymodule
+        <set>
+            <if test="mName != null">
+                mName = #{mName, jdbcType=VARCHAR},
+            </if>
+            <if test="mAddress != null">
+                mAddress = #{mAddress, jdbcType=VARCHAR},
+            </if>
+            <if test="parentId > -1">
+                parentId = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="mType != null">
+                mType = #{mType,jdbcType=INTEGER},
+            </if>
+            <if test="imgUrl != null">
+                imgUrl = #{imgUrl, jdbcType=VARCHAR},
+            </if>
+<!--            <if test="createTime != null">-->
+<!--                createTime = #{createTime,jdbcType=TIMESTAMP},-->
+<!--            </if>-->
+        </set>
+        where id = #{id, jdbcType=INTEGER}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from hymodule where id = #{id}
+    </delete>
+
+    <select id="query" resultType="com.example.hy.system.entity.HyModule" parameterType="java.lang.Integer">
+        select * from hymodule where id = #{id}
+    </select>
+
     <select id="queryPageList" resultType="com.example.hy.system.entity.HyModule" parameterType="java.util.Map">
         select * from hymodule
         <where>
