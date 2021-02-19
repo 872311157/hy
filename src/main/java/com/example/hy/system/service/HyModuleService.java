@@ -5,6 +5,7 @@ import com.example.hy.system.mapper.HyModuleMapper;
 import com.example.hy.util.base.EntityBeanSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class HyModuleService implements IHyModuleService{
     @Autowired
     private HyModuleMapper hyModuleMapper;
 
+    @Transactional
     @Override
     public Integer save(HyModule hyModule) {
         return this.hyModuleMapper.save(hyModule);

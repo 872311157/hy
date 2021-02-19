@@ -8,6 +8,7 @@ import com.example.hy.util.redis.HyRedisTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,7 +40,7 @@ public class LoginController extends BaseController{
      * 登录
      * @return
      */
-    @RequestMapping("/submit")
+    @RequestMapping(value = "/submit", method= RequestMethod.GET)
     public ModelAndView submit(@RequestParam Map<String, String> user, ModelAndView model, HttpServletRequest request) {
         String username = user.get("username");
         String password = user.get("password");
